@@ -1,0 +1,14 @@
+# Python 関連
+__pycache__/
+*.pyc
+*.pyo
+
+# 仮想環境
+.venv
+
+# Django 関連
+db.sqlite3
+media/
+
+# 環境変数
+.env

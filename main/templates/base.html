@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SNSアプリ</title>
+    <link rel="stylesheet" href="{% static 'main/css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/base.css' %}" />
+    {% block extrahead %}
+
+    {% endblock %}
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="navbar-container">
+          <a href="{% url 'index' %}" class="navbar-brand">算数ゲーム</a>
+          <ul class="navbar-menu">
+            <li>
+              <a href="{% url 'index' %}">ホーム</a>
+            </li>
+            <li>
+              <a href="#">設定</a>
+            </li>
+            {% if user.is_authenticated %}
+              <li>
+                <a href="{% url 'account_logout' %}">ログアウト</a>
+              </li>
+            {% else %}
+              <li>
+                <a href="{% url 'account_login' %}">ログイン</a>
+              </li>
+              <li>
+                <a href="{% url 'account_signup' %}">サインアップ</a>
+              </li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    {% block main %}
+
+    {% endblock %}
+
+    <footer></footer>
+  </body>
+</html>

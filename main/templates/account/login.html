@@ -1,0 +1,43 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'main/css/login.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <div class="container">
+    <h2>ログイン</h2>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="login">ユーザー名</label>
+        {{ form.login }}
+      </div>
+      {% if form.login.errors %}
+        <div class="error">{{ form.login.errors }}</div>
+      {% endif %}
+      <div class="form-group">
+        <label for="password">パスワード</label>
+        {{ form.password }}
+      </div>
+      {% if form.password.errors %}
+        <div class="error">{{ form.password.errors }}</div>
+      {% endif %}
+
+      {% if form.non_field_errors %}
+        <ul class="error-list">
+          {% for error in form.non_field_errors %}
+            <li class="error">{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      <button type="submit" class="login-button">ログイン</button>
+    </form>
+    <div class="links">
+      <a href="{% url 'account_reset_password' %}">パスワードを忘れましたか？</a>
+      <a href="{% url 'account_signup' %}">新規登録はこちら</a>
+    </div>
+  </div>
+{% endblock %}

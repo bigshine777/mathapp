@@ -1,0 +1,15 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'main/css/verification_sent.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <div class="container">
+    <h2 class="page-title">メール認証</h2>
+
+    <p class="page-description">メールを送信しました。</p>
+    <p class="page-description">メールのリンクをクリックし、ユーザー登録を完了してください</p>
+  </div>
+{% endblock %}
