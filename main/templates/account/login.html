@@ -1,8 +1,9 @@
 {% extends '../base.html' %}
 {% load static %}
+{% load socialaccount %}
 
 {% block extrahead %}
-  <link rel="stylesheet" href="{% static 'main/css/login.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/account/login.css' %}" />
 {% endblock %}
 
 {% block main %}
@@ -36,8 +37,14 @@
       <button type="submit" class="login-button">ログイン</button>
     </form>
     <div class="links">
-      <a href="{% url 'account_reset_password' %}">パスワードを忘れましたか？</a>
-      <a href="{% url 'account_signup' %}">新規登録はこちら</a>
+      {% comment %} <a href="{% url 'account_reset_password' %}" class="link">パスワードを忘れましたか？</a> {% endcomment %}
+      <a href="{% url 'account_signup' %}" class="link">新規登録はこちら</a>
+      <a class="google-button" href="{% provider_login_url 'google' %}">
+        <div class="google-icon">
+          <img src="{% static 'image/google_icon.svg' %}" class="google-icon-image" alt="Googleのアイコン" />
+        </div>
+        <span class="gsi-material-button-contents">Logged in with Google</span>
+      </a>
     </div>
   </div>
 {% endblock %}

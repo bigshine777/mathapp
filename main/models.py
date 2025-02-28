@@ -1,9 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class CustomUser(AbstractUser):
-    username = models.CharField(max_length=20, unique=True)
-    email = models.EmailField(unique=True)
+    username = models.CharField(max_length=20, unique=True, verbose_name="ユーザー名")
+    email = models.EmailField(unique=True, verbose_name="メールアドレス")
     # icon = models.ImageField(upload_to="user_icons/", null=True, blank=True)
 
     class Meta:

@@ -23,7 +23,7 @@ form {
     margin: 20px 0;
 }
 
-.error{
+.error {
     color: red;
 }
 
@@ -41,9 +41,29 @@ form {
     width: 100%;
 }
 
-.links{
+.links {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
+}
+
+.link {
+    border: 1px solid rgb(65, 65, 65);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.google-button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid rgb(65, 65, 65);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.google-icon {
+    width: 1rem;
 }

@@ -10,6 +10,12 @@ https://docs.djangoproject.com/ja/5.1/topics/settings/
 https://docs.djangoproject.com/ja/5.1/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv
+
+# .env の読み込み
+load_dotenv()
+
 from pathlib import Path
 
 # プロジェクト内のパスを簡単に指定できるように、BASE_DIR を定義
@@ -45,7 +51,10 @@ INSTALLED_APPS = [
     "allauth",  # allauthの追加
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",  # セキュリティ強化のためのミドルウェア
@@ -56,7 +65,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",  # メッセージフレームワーク
     "django.middleware.clickjacking.XFrameOptionsMiddleware",  # クリックジャッキング対策
     "allauth.account.middleware.AccountMiddleware",
-    "django.middleware.locale.LocaleMiddleware", 
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 # プロジェクトのルート URL 設定ファイル
@@ -102,6 +111,20 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",  # allauth認証
 ]
 
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": os.getenv("GOOGLE_CLIENT_ID"),
+            "secret": os.getenv("GOOGLE_CLIENT_SECRET"),
+            "key": "",
+        },
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
+    }
+}
+
+SOCIALACCOUNT_ADAPTER = "main.adapters.SocialAccountAdapter"
+
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LOGIN_REDIRECT_URL = "/"  # ログイン後のリダイレクト先
@@ -109,7 +132,6 @@ ACCOUNT_LOGIN_METHODS = {"username", "email"}
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True
-ACCOUNT_SIGNUP_REDIRECT_URL = "/"  # サインアップ後のリダイレクト先
 
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login"  # ログアウト後のリダイレクト先

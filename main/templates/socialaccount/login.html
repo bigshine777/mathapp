@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/socialaccount/login.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <div class="container">
+    <h2>Googleでログイン</h2>
+    <p>Googleアカウントを使用してログインしてください。</p>
+    <form action="" method="post">
+      {% csrf_token %}
+      <button class="confirm-button" type="submit">続ける</button>
+    </form>
+  </div>
+{% endblock %}
