@@ -1,0 +1,35 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/main/setting.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <div class="container">
+    <div class="field-block">
+      <p class="label">ユーザー名</p>
+      <p class="field-value">{{ request.user.username }}</p>
+    </div>
+
+    <div class="field-block">
+      <p class="label">メールアドレス</p>
+      <p class="field-value">{{ request.user.email }}</p>
+    </div>
+
+    <div class="field-block">
+      <p class="label">連携済みのソーシャルアカウント</p>
+      {% with accounts=request.user.socialaccount_set.all %}
+        {% if accounts %}
+          <ul>
+            {% for account in accounts %}
+              <li>{{ account.provider|title }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="field-value">なし</p>
+        {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+{% endblock %}

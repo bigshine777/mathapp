@@ -20,10 +20,10 @@
             <li>
               <a href="{% url 'index' %}">ホーム</a>
             </li>
-            <li>
-              <a href="#">設定</a>
-            </li>
             {% if user.is_authenticated %}
+              <li>
+                <a href="{% url 'setting' %}">設定</a>
+              </li>
               <li>
                 <a href="{% url 'account_logout' %}">ログアウト</a>
               </li>
