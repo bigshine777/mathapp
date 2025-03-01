@@ -5,3 +5,5 @@
 {{ activate_url }}
 
 このリンクは一定時間後に無効になります。
+
+MathApp

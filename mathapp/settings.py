@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",  # セッション管理
     "django.contrib.messages",  # メッセージフレームワーク
     "django.contrib.staticfiles",  # 静的ファイル管理
+    "django.contrib.sites",
     "main",  # mainアプリケーションのインストール
     "allauth",  # allauthの追加
     "allauth.account",
