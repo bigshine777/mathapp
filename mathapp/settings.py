@@ -107,6 +107,11 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 
 AUTH_USER_MODEL = "main.CustomUser"
 
+ACCOUNT_FORMS = {
+    "signup": "main.forms.CustomSignupForm",
+}
+
+
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",  # Djangoの通常認証
     "allauth.account.auth_backends.AuthenticationBackend",  # allauth認証
@@ -129,7 +134,7 @@ SOCIALACCOUNT_ADAPTER = "main.adapters.SocialAccountAdapter"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LOGIN_REDIRECT_URL = "/"  # ログイン後のリダイレクト先
-ACCOUNT_LOGIN_METHODS = {"username", "email"}
+ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = True

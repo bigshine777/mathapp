@@ -1,0 +1,26 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/account/social_account_confirmation.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <div class="container">
+    <p>{{ email }} の既存アカウントとこのソーシャルアカウントを紐付けますか？</p>
+
+    <form method="post" action="{% url 'social_account_confirmation' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="password">パスワード</label>
+        <input type="password" name="password" id="password" required />
+      </div>
+      {% if error %}
+        <p class="error">{{ error }}</p>
+      {% endif %}
+
+      <button type="submit" name="confirm" class="submit-button">紐付ける</button>
+    </form>
+  </div>
+{% endblock %}
