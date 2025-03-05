@@ -1,0 +1,67 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.heading{
+    margin-bottom: 10px;
+}
+
+.tree-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+    background-color: #dfdfdf;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2), -4px -4px 10px rgba(255, 255, 255, 0.5);
+}
+
+.tree-container svg {
+    overflow: visible;
+}
+
+.node {
+    cursor: pointer;
+}
+
+.node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 3px;
+}
+
+.node text {
+    font: 12px sans-serif;
+}
+
+.link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 2px;
+}
+
+div:has(>.tree-button) {
+    height: 100%;
+    background-color: #86d854;
+    transition: background-color 0.2s;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div:has(>.tree-button):hover {
+    background-color: #75bd49;
+}
+
+.tree-button {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+

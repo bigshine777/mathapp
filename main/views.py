@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login
 from allauth.socialaccount.models import SocialAccount
 from .models import CustomUser, Stage, Question
 from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework import viewsets
+from .serializers import StageSerializer
 
 
 class IndexView(TemplateView):
@@ -56,6 +58,11 @@ class SelectStageView(LoginRequiredMixin, ListView):
 
 class SettingView(LoginRequiredMixin, TemplateView):
     template_name = "main/setting.html"
+
+
+class StageViewSet(LoginRequiredMixin,viewsets.ReadOnlyModelViewSet):
+    queryset = Stage.objects.all()
+    serializer_class = StageSerializer
 
 
 def social_account_confirmation(request):

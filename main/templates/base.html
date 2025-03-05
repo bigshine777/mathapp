@@ -23,6 +23,9 @@
             <li>
               <a href="{% url 'progress_overview' %}">進捗</a>
             </li>
+            <li>
+              <a href="{% url 'stages' %}">ステージ選択</a>
+            </li>
             {% if user.is_authenticated %}
               <li>
                 <a href="{% url 'setting' %}">設定</a>
@@ -48,6 +51,7 @@
     {% endblock %}
 
     <footer></footer>
-    {% block extra_script %}{% endblock %}
+    {% block extra_script %}
+    {% endblock %}
   </body>
 </html>

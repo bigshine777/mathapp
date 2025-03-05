@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path,include
+from rest_framework.routers import DefaultRouter
 from .views import (
     IndexView,
     SettingView,
@@ -6,7 +7,11 @@ from .views import (
     social_account_confirmation,
     ProgressView,
     SelectStageView,
+    StageViewSet
 )
+
+router = DefaultRouter()
+router.register(r'stages', StageViewSet)
 
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
@@ -16,7 +21,9 @@ urlpatterns = [
         social_account_confirmation,
         name="social_account_confirmation",
     ),
+    path('api/', include(router.urls)),
     path("progress_overview", ProgressView.as_view(), name="progress_overview"),
-    path("select_stage", SelectStageView.as_view(), name="select_stage"),
+    path("stages", SelectStageView.as_view(), name="stages"),
+    path("stages/<int:stage_id>/", SelectStageView.as_view(), name="stage_detail"),
     path("setting", SettingView.as_view(), name="setting"),
 ]
