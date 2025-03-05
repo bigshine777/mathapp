@@ -6,4 +6,15 @@
 {% endblock %}
 
 {% block main %}
+  <div class="container">
+    <h1 class="heading">算数アプリで勉強しよう！</h1>
+    <div class="links">
+      {% if user.is_authenticated %}
+        <a href="{% url 'progress_overview' %}" class="link">現在の進捗を確認</a>
+        <a href="{% url 'select_stage' %}" class="link">ステージ選択</a>
+      {% else %}
+        <a href="{% url 'account_login' %}" class="link">ログイン</a>
+      {% endif %}
+    </div>
+  </div>
 {% endblock %}

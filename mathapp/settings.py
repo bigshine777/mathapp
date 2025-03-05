@@ -169,7 +169,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # 言語とタイムゾーンの設定
 # https://docs.djangoproject.com/ja/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"  # 言語設定 (日本語なら "ja" に変更)
+LANGUAGE_CODE = "ja"  # 言語設定 (日本語なら "ja" に変更)
 
 TIME_ZONE = "UTC"  # タイムゾーン (日本時間なら "Asia/Tokyo" に変更)
 

@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SNSアプリ</title>
+    <title>算数アプリ</title>
     <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
     <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     {% block extrahead %}
@@ -19,6 +19,9 @@
           <ul class="navbar-menu">
             <li>
               <a href="{% url 'index' %}">ホーム</a>
+            </li>
+            <li>
+              <a href="{% url 'progress_overview' %}">進捗</a>
             </li>
             {% if user.is_authenticated %}
               <li>
@@ -45,5 +48,6 @@
     {% endblock %}
 
     <footer></footer>
+    {% block extra_script %}{% endblock %}
   </body>
 </html>
