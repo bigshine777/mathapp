@@ -15,7 +15,6 @@ fetch('/api/stages/')
 
         // ツリーの最大深度（横方向の最大距離）
         const maxDepth = d3.max(root.descendants(), (d) => d.depth) || 1
-        // const maxBranches = d3.max(root.descendants(), (d) => (d.children ? d.children.length : 0)) || 1;
 
         function countTotalBranches(node) {
             if (!node.children || node.children.length === 0) return 0;
@@ -66,7 +65,7 @@ fetch('/api/stages/')
                     .y((d) => d.x)
             )
             .style('fill', 'none')
-            .style('stroke', 'rgb(234, 204, 172)')
+            .style('stroke', 'rgb(231, 166, 97)')
             .style('stroke-width', 8)
 
         // ノードを描画
@@ -78,12 +77,18 @@ fetch('/api/stages/')
             .attr('transform', (d) => `translate(${d.y},${d.x})`)
 
         // ノードにボタンを追加
+        const currentUserId = parseInt(document.querySelector('.user-id').dataset.userId, 10);
+
         nodes
             .append('foreignObject')
             .attr('x', -80)
             .attr('y', -30)
             .attr('width', 160)
             .attr('height', 60)
-            .append('xhtml:div')
-            .html((d) => `<a class="tree-button" href="/stages/${d.data.id}">${d.data.stage_name}</a>`)
+            .html((d) => {
+                const isCompleted = d.data.completed_users.some(user => user.id === currentUserId);
+                const parentCompleted = !d.parent || d.parent.data.completed_users.some(user => user.id === currentUserId);
+
+                return `<a class="tree-button ${!parentCompleted ? 'disabled' : ''} ${isCompleted ? 'completed' : ''}" href="/stages/${d.data.id}">${d.data.stage_name}</a>`;
+            });
     })

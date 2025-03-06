@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block main %}
+  <input type="hidden" data-user-id="{{ request.user.id }}" class="user-id" />
   <div class="container">
     <h1 class="heading">ステージ選択</h1>
     <div id="tree-container" class="tree-container"></div>

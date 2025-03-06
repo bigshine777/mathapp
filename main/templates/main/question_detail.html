@@ -1,0 +1,22 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/main/question_detail.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <div class="container">
+    <h1 class="heading">問題{{ question.question_number }}</h1>
+    <div class="question-block">
+      <p>{{ question.content }}</p>
+
+      <input type="text" class="answer-input" />
+      <button class="submit-button" id="submit-button">決定</button>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_script %}
+
+{% endblock %}

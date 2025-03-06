@@ -1,0 +1,23 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" href="{% static 'css/main/stage_detail.css' %}" />
+{% endblock %}
+
+{% block main %}
+  <div class="container">
+    <h1 class="heading">{{ object.stage_name }}</h1>
+    <div class="content-block">
+      {% if request.user in object.completed_users.all %}
+        <p class="completed-alert">
+          <span class="checkmark">✔</span> クリア済み
+        </p>
+      {% endif %}
+      <p class="description">クリア済み  {{ completed_count }} / 全{{ object.questions.all|length }}問</p>
+      {% if object.questions.exists %}
+        <a href="{% url 'question_detail' first_question.id %}" class="submit-button">問題に進む</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

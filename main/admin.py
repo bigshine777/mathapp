@@ -5,7 +5,7 @@ admin.site.register(CustomUser)
 
 @admin.register(Stage)
 class StageAdmin(admin.ModelAdmin):
-    filter_horizontal = ('questions', 'completed_users')
+    filter_horizontal = ('completed_users',)
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):

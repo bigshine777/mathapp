@@ -1,11 +1,11 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
 }
 
-.heading{
+.heading {
     margin-bottom: 10px;
 }
 
@@ -43,25 +43,37 @@
     stroke-width: 2px;
 }
 
-div:has(>.tree-button) {
-    height: 100%;
-    background-color: #86d854;
-    transition: background-color 0.2s;
-    border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-div:has(>.tree-button):hover {
-    background-color: #75bd49;
-}
-
 .tree-button {
     font-size: 1rem;
     font-weight: bold;
     color: white;
     border: none;
     cursor: pointer;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background-color: #d7d300;
+    transition: background-color 0.2s;
 }
 
+.tree-button:hover {
+    background-color: #bcb900;
+}
+
+.tree-button.completed {
+    background-color: #52d500;
+    cursor: default;
+}
+
+.tree-button.completed:hover {
+    background-color: #48bc00;
+}
+
+.tree-button.disabled {
+    background-color: #9d9d9d;
+    cursor: default;
+    pointer-events: none;
+}

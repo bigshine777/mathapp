@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from allauth.account.views import SignupView
 from .forms import CustomSignupForm
 from django.shortcuts import render, redirect
@@ -60,9 +60,39 @@ class SettingView(LoginRequiredMixin, TemplateView):
     template_name = "main/setting.html"
 
 
-class StageViewSet(LoginRequiredMixin,viewsets.ReadOnlyModelViewSet):
-    queryset = Stage.objects.all()
+class StageViewSet(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet):
+    queryset = Stage.objects.all().prefetch_related("questions", "completed_users")
     serializer_class = StageSerializer
+
+
+class StageDetailView(LoginRequiredMixin, DetailView):
+    model = Stage
+    template_name = "main/stage_detail.html"
+
+    def get_queryset(self):
+        return Stage.objects.prefetch_related("questions", "completed_users")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        stage = context["stage"]
+
+        first_question = stage.questions.filter(question_number=1).first()
+        context["first_question"] = first_question
+
+        completed_count = stage.questions.filter(
+            completed_users=self.request.user
+        ).count()
+        context["completed_count"] = completed_count
+
+        return context
+
+
+class QustionDetailView(LoginRequiredMixin, DetailView):
+    model = Question
+    template_name = "main/question_detail.html"
+
+    def get_queryset(self):
+        return Question.objects.prefetch_related("stage", "completed_users")
 
 
 def social_account_confirmation(request):

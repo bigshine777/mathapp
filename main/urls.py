@@ -7,7 +7,9 @@ from .views import (
     social_account_confirmation,
     ProgressView,
     SelectStageView,
-    StageViewSet
+    StageViewSet,
+    StageDetailView,
+    QustionDetailView,
 )
 
 router = DefaultRouter()
@@ -24,6 +26,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path("progress_overview", ProgressView.as_view(), name="progress_overview"),
     path("stages", SelectStageView.as_view(), name="stages"),
-    path("stages/<int:stage_id>/", SelectStageView.as_view(), name="stage_detail"),
+    path("stages/<int:pk>/", StageDetailView.as_view(), name="stage_detail"),
+    path("questions/<int:pk>", QustionDetailView.as_view(), name="question_detail"),
     path("setting", SettingView.as_view(), name="setting"),
 ]

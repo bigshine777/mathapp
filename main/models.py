@@ -18,7 +18,6 @@ class Stage(models.Model):
     stage_name = models.CharField(
         blank=False, null=False, max_length=20, verbose_name="ステージ名", unique=True
     )
-    questions = models.ManyToManyField("Question", verbose_name="問題", blank=True)
     completed_users = models.ManyToManyField(
         "CustomUser", verbose_name="ユーザー", blank=True
     )
@@ -31,9 +30,17 @@ class Stage(models.Model):
 
 
 class Question(models.Model):
+    stage = models.ForeignKey(
+        "Stage",
+        on_delete=models.CASCADE,
+        related_name="questions",
+        null=False,
+        blank=False,
+    )
     question_name = models.CharField(
         blank=False, null=False, max_length=20, verbose_name="問題名", unique=True
     )
+    question_number = models.IntegerField(default=1, null=False, blank=False)
     content = models.TextField(blank=False, null=False, verbose_name="問題文")
     answer = models.TextField(blank=False, null=False, verbose_name="解答")
     completed_users = models.ManyToManyField(
