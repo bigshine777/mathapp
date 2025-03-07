@@ -28,6 +28,13 @@ class Stage(models.Model):
     def __str__(self):
         return self.stage_name
 
+    @property
+    def first_question(self):
+        return self.questions.filter(question_number=1).first()
+
+    def completed_count(self, user):
+        return self.questions.filter(completed_users=user).count()
+
 
 class Question(models.Model):
     stage = models.ForeignKey(
@@ -49,3 +56,15 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_name
+
+    @property
+    def next_question(self):
+        return Question.objects.filter(
+            stage=self.stage, question_number=self.question_number + 1
+        ).first()
+
+    @property
+    def last_question(self):
+        return Question.objects.filter(
+            stage=self.stage, question_number=self.question_number - 1
+        ).first()

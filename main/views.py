@@ -6,8 +6,10 @@ from django.contrib.auth import authenticate, login
 from allauth.socialaccount.models import SocialAccount
 from .models import CustomUser, Stage, Question
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .mixins import QuestionAccessMixin, StageAccessMixin
 from rest_framework import viewsets
 from .serializers import StageSerializer
+from django.contrib import messages
 
 
 class IndexView(TemplateView):
@@ -65,7 +67,7 @@ class StageViewSet(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = StageSerializer
 
 
-class StageDetailView(LoginRequiredMixin, DetailView):
+class StageDetailView(LoginRequiredMixin, StageAccessMixin, DetailView):
     model = Stage
     template_name = "main/stage_detail.html"
 
@@ -76,23 +78,33 @@ class StageDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         stage = context["stage"]
 
-        first_question = stage.questions.filter(question_number=1).first()
-        context["first_question"] = first_question
-
-        completed_count = stage.questions.filter(
-            completed_users=self.request.user
-        ).count()
+        completed_count = stage.completed_count(self.request.user)
         context["completed_count"] = completed_count
 
         return context
 
 
-class QustionDetailView(LoginRequiredMixin, DetailView):
+class QuestionDetailView(LoginRequiredMixin, QuestionAccessMixin, DetailView):
     model = Question
     template_name = "main/question_detail.html"
 
     def get_queryset(self):
         return Question.objects.prefetch_related("stage", "completed_users")
+
+    def post(self, request, *args, **kwargs):
+        question = self.get_object()
+        input_answer = request.POST.get("answer", "").strip()
+
+        if input_answer == question.answer:
+            question.completed_users.add(request.user)
+            if not question.next_question:
+                question.stage.completed_users.add(request.user)
+            question.save()
+            messages.success(request, "正解!")
+        else:
+            messages.error(request, "不正解!")
+
+        return redirect("question_detail", pk=question.id)
 
 
 def social_account_confirmation(request):

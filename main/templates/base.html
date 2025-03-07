@@ -46,12 +46,31 @@
       </nav>
     </header>
 
+    <!-- メッセージ表示 -->
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
     {% block main %}
 
     {% endblock %}
 
     <footer></footer>
+
     {% block extra_script %}
+
     {% endblock %}
+    <script>
+      // メッセージを一定時間後に自動で消す
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function () {
+          document.querySelectorAll('.message').forEach((msg) => msg.remove())
+        }, 2000) // 3秒後に消える
+      })
+    </script>
   </body>
 </html>

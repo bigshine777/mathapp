@@ -40,3 +40,39 @@
 .navbar-menu a:hover {
     color: #cfcfcf;
 }
+
+.messages {
+    z-index: 1000;
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+}
+
+.message {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+.message.success {
+    background-color: #4caf50;
+    color: white;
+}
+
+.message.error {
+    background-color: #f44336;
+    color: white;
+}
+
+.message.info {
+    background-color: #2196f3;
+    color: white;
+}
+
+.message.warning {
+    background-color: #ff9800;
+    color: white;
+}

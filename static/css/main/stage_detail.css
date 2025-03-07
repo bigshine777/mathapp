@@ -62,3 +62,30 @@
     transform: scale(1);
 }
 
+.links{
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    margin-top: 20px;
+}
+
+.link{
+    background-color: rgb(41, 124, 231);
+    padding: 10px 20px;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.link.disabled{
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.link:hover {
+    background-color: rgb(31, 96, 181);
+}
+

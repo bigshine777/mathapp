@@ -7,17 +7,25 @@
 
 {% block main %}
   <div class="container">
-    <h1 class="heading">{{ object.stage_name }}</h1>
+    <h1 class="heading">{{ stage.stage_name }}</h1>
     <div class="content-block">
-      {% if request.user in object.completed_users.all %}
+      {% if request.user in stage.completed_users.all %}
         <p class="completed-alert">
           <span class="checkmark">✔</span> クリア済み
         </p>
       {% endif %}
-      <p class="description">クリア済み  {{ completed_count }} / 全{{ object.questions.all|length }}問</p>
-      {% if object.questions.exists %}
-        <a href="{% url 'question_detail' first_question.id %}" class="submit-button">問題に進む</a>
+      <p class="description">クリア済み {{ completed_count }} / 全{{ stage.questions.all|length }}問</p>
+      {% if stage.questions.exists %}
+        <a href="{% url 'question_detail' stage.first_question.id %}" class="submit-button">問題に進む</a>
       {% endif %}
+
+      <div class="links">
+        {% for next_stage in stage.children.all %}
+          {% if next_stage %}
+            <a href="{% url 'stage_detail' next_stage.id %}" class="link {% if request.user not in stage.completed_users.all %}disabled{% endif %}">{{ next_stage.stage_name }}へ</a>
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
   </div>
 {% endblock %}

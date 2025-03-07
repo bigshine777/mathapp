@@ -9,7 +9,7 @@ from .views import (
     SelectStageView,
     StageViewSet,
     StageDetailView,
-    QustionDetailView,
+    QuestionDetailView,
 )
 
 router = DefaultRouter()
@@ -27,6 +27,6 @@ urlpatterns = [
     path("progress_overview", ProgressView.as_view(), name="progress_overview"),
     path("stages", SelectStageView.as_view(), name="stages"),
     path("stages/<int:pk>/", StageDetailView.as_view(), name="stage_detail"),
-    path("questions/<int:pk>", QustionDetailView.as_view(), name="question_detail"),
+    path("questions/<int:pk>", QuestionDetailView.as_view(), name="question_detail"),
     path("setting", SettingView.as_view(), name="setting"),
 ]

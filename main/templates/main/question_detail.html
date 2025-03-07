@@ -9,10 +9,30 @@
   <div class="container">
     <h1 class="heading">問題{{ question.question_number }}</h1>
     <div class="question-block">
-      <p>{{ question.content }}</p>
+      <div class="question-text">
+        <span>Q.</span>
+        <p>{{ question.content }}</p>
+      </div>
 
-      <input type="text" class="answer-input" />
-      <button class="submit-button" id="submit-button">決定</button>
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" class="answer-input" name="answer" required />
+          <button class="submit-button" id="submit-button">決定</button>
+        </div>
+      </form>
+
+      <div class="links">
+        {% if question.last_question %}
+          <a href="{% url 'question_detail' question.last_question.id %}" class="link">前の問題へ</a>
+        {% endif %}
+
+        {% if question.next_question %}
+          <a href="{% url 'question_detail' question.next_question.id %}" class="link {% if request.user not in question.completed_users.all %}disabled{% endif %}">次の問題へ</a>
+        {% else %}
+        <a href="{% url 'stage_detail' question.stage.id %}" class="link {% if request.user not in question.completed_users.all %}disabled{% endif %}">このステージを完了する</a>
+        {% endif %}
+      </div>
     </div>
   </div>
 {% endblock %}
