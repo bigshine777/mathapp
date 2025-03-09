@@ -28,9 +28,7 @@
 .checkmark {
     margin-right: 8px;
     color: green;
-    /* チェックマークの色 */
     font-size: 1.2rem;
-    /* サイズ調整 */
 }
 
 .description {

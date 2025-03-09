@@ -7,36 +7,71 @@
 
 {% block main %}
   <div class="container">
-    <h1 class="heading">問題{{ question.question_number }}</h1>
+    <h1 class="heading">
+      {% if request.user in question.completed_users.all %}
+        <span class="checkmark">✔</span>
+      {% endif %}問題{{ question.question_number }}
+    </h1>
     <div class="question-block">
-      <div class="question-text">
-        <span>Q.</span>
-        <p>{{ question.content }}</p>
-      </div>
-
       <form action="" method="post">
         {% csrf_token %}
-        <div class="form-group">
-          <input type="text" class="answer-input" name="answer" required />
+        <div class="question-text">
+          <span>Q.</span>
+          <p>{{ question.content }}</p>
+
+          <div id="answer-box" class="answer-box" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          <input type="hidden" id="answer-input" name="answer" required />
+        </div>
+
+        <div class="card-container">
+          {% for num in "123456789" %}
+            <div class="number-card" draggable="true" ondragstart="drag(event)" data-value="{{ num }}">{{ num }}</div>
+          {% endfor %}
           <button class="submit-button" id="submit-button">決定</button>
         </div>
+
+        <div class="links">
+          {% if question.last_question %}
+            <a href="{% url 'question_detail' question.last_question.id %}" class="link">前の問題へ</a>
+          {% endif %}
+
+          {% if question.next_question %}
+            <a href="{% url 'question_detail' question.next_question.id %}" class="link {% if request.user not in question.completed_users.all %}disabled{% endif %}">次の問題へ</a>
+          {% else %}
+            <a href="{% url 'stage_detail' question.stage.id %}" class="link {% if request.user not in question.completed_users.all %}disabled{% endif %}">このステージを完了する</a>
+          {% endif %}
+        </div>
       </form>
-
-      <div class="links">
-        {% if question.last_question %}
-          <a href="{% url 'question_detail' question.last_question.id %}" class="link">前の問題へ</a>
-        {% endif %}
-
-        {% if question.next_question %}
-          <a href="{% url 'question_detail' question.next_question.id %}" class="link {% if request.user not in question.completed_users.all %}disabled{% endif %}">次の問題へ</a>
-        {% else %}
-        <a href="{% url 'stage_detail' question.stage.id %}" class="link {% if request.user not in question.completed_users.all %}disabled{% endif %}">このステージを完了する</a>
-        {% endif %}
-      </div>
     </div>
   </div>
 {% endblock %}
 
 {% block extra_script %}
-
+  <script>
+    function allowDrop(event) {
+      event.preventDefault()
+    }
+    
+    function drag(event) {
+      event.dataTransfer.setData('text', event.target.dataset.value)
+    }
+    
+    function drop(event) {
+      event.preventDefault()
+      var data = event.dataTransfer.getData('text')
+      console.log(data)
+      var answerBox = document.getElementById('answer-box')
+      var inputField = document.getElementById('answer-input')
+    
+      var placeholder = answerBox.querySelector('.placeholder')
+      if (placeholder) placeholder.remove()
+    
+      var span = document.createElement('span')
+      span.textContent = data
+      span.classList.add('dropped-number')
+      answerBox.appendChild(span)
+    
+      inputField.value += data
+    }
+  </script>
 {% endblock %}

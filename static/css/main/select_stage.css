@@ -11,12 +11,13 @@
 
 .tree-container {
     width: 100%;
+    /* width: 1000px; */
     display: flex;
     justify-content: center;
     overflow: auto;
-    background-color: #dfdfdf;
+    /* background-color: #dfdfdf;
     border-radius: 10px;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2), -4px -4px 10px rgba(255, 255, 255, 0.5);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2), -4px -4px 10px rgba(255, 255, 255, 0.5); */
 }
 
 .tree-container svg {

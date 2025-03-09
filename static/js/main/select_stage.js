@@ -27,7 +27,7 @@ fetch('/api/stages/')
         const maxBranches = countTotalBranches(root) + 1;
 
         // ルートを中央寄せするためのオフセット
-        const rootOffset = (maxDepth / 2) * (nodeSpacingX + 50)
+        const rootOffset = (maxDepth / 2) * (nodeSpacingX + 20)
 
         // **負の値にならないように修正**
         const dynamicWidth = (maxDepth + 2) * (nodeSpacingX + 80)
@@ -42,7 +42,6 @@ fetch('/api/stages/')
         const container = d3.select('#tree-container')
         container.style('overflow-x', 'auto')
             .style('white-space', 'nowrap')
-            .style('width', '1000px')
             .style('height', 'min-content')
 
         const svg = container.append('svg')

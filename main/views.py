@@ -99,12 +99,14 @@ class QuestionDetailView(LoginRequiredMixin, QuestionAccessMixin, DetailView):
             question.completed_users.add(request.user)
             if not question.next_question:
                 question.stage.completed_users.add(request.user)
+                question.save()
+                messages.success(request, "正解!")
+                return redirect("stage_detail", pk=question.stage.id)
             question.save()
-            messages.success(request, "正解!")
+            return redirect("question_detail", pk=question.next_question.id)
         else:
             messages.error(request, "不正解!")
-
-        return redirect("question_detail", pk=question.id)
+            return redirect("question_detail", pk=question.id)
 
 
 def social_account_confirmation(request):
