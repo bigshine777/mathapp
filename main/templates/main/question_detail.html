@@ -16,19 +16,35 @@
       <form action="" method="post">
         {% csrf_token %}
         <div class="question-text">
-          <span>Q.</span>
-          <p>{{ question.content }}</p>
+          <p>{{ question.content }} =</p>
 
-          <div id="answer-box" class="answer-box" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          {% if question.question_type != 'simple_number' %}
+            <div id="answer-box" class="answer-box" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+          {% endif %}
+        </div>
+
+        {% if question.question_type != 'simple_number' %}
           <input type="hidden" id="answer-input" name="answer" required />
-        </div>
+          <div class="card-container">
+            {% for num in "0123456789" %}
+              <div class="number-card" draggable="true" ondragstart="drag(event)" data-value="{{ num }}">{{ num }}</div>
+            {% endfor %}
+            <button class="submit-button" id="submit-button">決定</button>
+          </div>
+        {% else %}
+          <div class="slider-block">
+            <div class="slider-container">
+              <input type="range" id="answer-input" name="answer" min="0" max="9" class="slider" />
+            </div>
 
-        <div class="card-container">
-          {% for num in "123456789" %}
-            <div class="number-card" draggable="true" ondragstart="drag(event)" data-value="{{ num }}">{{ num }}</div>
-          {% endfor %}
-          <button class="submit-button" id="submit-button">決定</button>
-        </div>
+            <div class="tick-marks">
+              {% for i in "0123456789" %}
+                <div class="tick-mark{% if i == '0' %} hidden{% endif %}">{{ i }}</div>
+              {% endfor %}
+            </div>
+            <button class="submit-button" id="submit-button">決定</button>
+          </div>
+        {% endif %}
 
         <div class="links">
           {% if question.last_question %}

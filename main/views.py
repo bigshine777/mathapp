@@ -10,6 +10,7 @@ from .mixins import QuestionAccessMixin, StageAccessMixin
 from rest_framework import viewsets
 from .serializers import StageSerializer
 from django.contrib import messages
+import random
 
 
 class IndexView(TemplateView):
@@ -90,6 +91,24 @@ class QuestionDetailView(LoginRequiredMixin, QuestionAccessMixin, DetailView):
 
     def get_queryset(self):
         return Question.objects.prefetch_related("stage", "completed_users")
+
+    def get(self, request, *args, **kwargs):
+        question = self.get_object()
+
+        if question.question_type == "simple_number":
+            random_num = random.randint(0, 9)
+            question.content = str(random_num)
+            question.answer = str(random_num)
+
+        elif question.question_type == "single_addition":
+            random_num1 = random.randint(0, 9)
+            random_num2 = random.randint(0, 9 - random_num1)
+            question.content = f"{random_num1} + {random_num2}"
+            question.answer = str(random_num1 + random_num2)
+
+        question.save()
+
+        return render(request, "main/question_detail.html", {"question": question})
 
     def post(self, request, *args, **kwargs):
         question = self.get_object()

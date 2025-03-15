@@ -36,6 +36,13 @@ class Stage(models.Model):
         return self.questions.filter(completed_users=user).count()
 
 
+QUESTION_TYPES = [
+    ("simple_number", "単一数字"),
+    ("single_addition", "一桁の足し算"),
+    ("static_question", "固定問題"),
+]
+
+
 class Question(models.Model):
     stage = models.ForeignKey(
         "Stage",
@@ -44,10 +51,13 @@ class Question(models.Model):
         null=False,
         blank=False,
     )
-    question_name = models.CharField(
-        blank=False, null=False, max_length=20, verbose_name="問題名", unique=True
-    )
     question_number = models.IntegerField(default=1, null=False, blank=False)
+    question_type = models.CharField(
+        max_length=50,
+        choices=QUESTION_TYPES,
+        default="simple_number",
+        verbose_name="問題の種類",
+    )
     content = models.TextField(blank=False, null=False, verbose_name="問題文")
     answer = models.TextField(blank=False, null=False, verbose_name="解答")
     completed_users = models.ManyToManyField(
@@ -55,7 +65,7 @@ class Question(models.Model):
     )
 
     def __str__(self):
-        return self.question_name
+        return self.stage.stage_name + "-" + str(self.question_number)
 
     @property
     def next_question(self):

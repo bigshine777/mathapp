@@ -32,7 +32,6 @@ class StageAccessMixin:
 
     def dispatch(self, request, *args, **kwargs):
         stage = self.get_object()
-        print(stage)
         
         if (stage.parent and not (request.user in stage.parent.completed_users.all())):
             messages.error(request, "このステージを先にクリアしてください")
