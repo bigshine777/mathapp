@@ -19,6 +19,12 @@
     border-radius: 10px;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .question-text {
     display: flex;
     justify-content: space-around;
@@ -69,6 +75,7 @@
 }
 
 .submit-button {
+    width: 30%;
     border-radius: 5px;
     background-color: #4CAF50;
     padding: 5px;
@@ -102,77 +109,61 @@
     background-color: rgb(31, 96, 181);
 }
 
-.slider-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .slider-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 20px 0;
-}
-
-.slider {
-    width: 300px;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 8px;
-    background: rgb(231, 231, 231);
-    border-radius: 4px;
-    outline: none;
-}
-
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    background: #4CAF50;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.slider::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    background: #4CAF50;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-#slider-value {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.tick-marks {
-    display: flex;
-    justify-content: space-between;
-    width: 300px;
-    margin-top: 5px;
-    font-size: 14px;
-    color: #666;
-}
-
-.tick-mark {
     position: relative;
-    text-align: center;
-    width: 10%;
+    width: 80%;
+    height: 50px;
+    margin: 20px auto;
 }
 
-.tick-mark:not(.hidden):after {
+.slider-track {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #ddd;
+    overflow: hidden;
+}
+
+.slider-track::before {
     content: "";
     position: absolute;
-    top: -10px;
-    left: 50%;
-    width: 2px;
-    height: 10px;
-    background: #666;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    width: var(--filled-percent, 0%);
+    height: 100%;
+    background: #007bff;
+    transition: width 0.5s ease-in-out;
 }
 
 
-  
+.slider-marks {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.slider-marks div {
+    width: 2px;
+    height: 100%;
+    background: #b5b5b5;
+}
+
+.slider-marks div:first-child {
+    background: none;
+}
+
+.slider-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 100%;
+    background: #70e00f;
+    cursor: grab;
+    transform: translateX(-50%);
+    transition: left 0.5s ease-in-out;
+}

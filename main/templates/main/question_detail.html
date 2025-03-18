@@ -16,35 +16,40 @@
       <form action="" method="post">
         {% csrf_token %}
         <div class="question-text">
-          <p>{{ question.content }} =</p>
+          <p>{{ question.content }}</p>
 
           {% if question.question_type != 'simple_number' %}
+            <p>=</p>
             <div id="answer-box" class="answer-box" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
           {% endif %}
         </div>
-
+        <input type="hidden" id="answer-input" name="answer" required />
         {% if question.question_type != 'simple_number' %}
-          <input type="hidden" id="answer-input" name="answer" required />
           <div class="card-container">
-            {% for num in "0123456789" %}
+            {% for num in "123456789" %}
               <div class="number-card" draggable="true" ondragstart="drag(event)" data-value="{{ num }}">{{ num }}</div>
             {% endfor %}
-            <button class="submit-button" id="submit-button">決定</button>
           </div>
         {% else %}
-          <div class="slider-block">
-            <div class="slider-container">
-              <input type="range" id="answer-input" name="answer" min="0" max="9" class="slider" />
+          <div class="slider-container" id="sliderContainer">
+            <div class="slider-track"></div>
+            <div class="slider-marks">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
             </div>
-
-            <div class="tick-marks">
-              {% for i in "0123456789" %}
-                <div class="tick-mark{% if i == '0' %} hidden{% endif %}">{{ i }}</div>
-              {% endfor %}
-            </div>
-            <button class="submit-button" id="submit-button">決定</button>
+            <div id="sliderHandle" class="slider-handle"></div>
           </div>
         {% endif %}
+
+        <button class="submit-button" id="submit-button">決定</button>
 
         <div class="links">
           {% if question.last_question %}
@@ -63,31 +68,5 @@
 {% endblock %}
 
 {% block extra_script %}
-  <script>
-    function allowDrop(event) {
-      event.preventDefault()
-    }
-    
-    function drag(event) {
-      event.dataTransfer.setData('text', event.target.dataset.value)
-    }
-    
-    function drop(event) {
-      event.preventDefault()
-      var data = event.dataTransfer.getData('text')
-      console.log(data)
-      var answerBox = document.getElementById('answer-box')
-      var inputField = document.getElementById('answer-input')
-    
-      var placeholder = answerBox.querySelector('.placeholder')
-      if (placeholder) placeholder.remove()
-    
-      var span = document.createElement('span')
-      span.textContent = data
-      span.classList.add('dropped-number')
-      answerBox.appendChild(span)
-    
-      inputField.value += data
-    }
-  </script>
+  <script src="{% static '/js/main/question_detail.js' %}"></script>
 {% endblock %}
