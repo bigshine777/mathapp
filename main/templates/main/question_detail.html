@@ -19,7 +19,6 @@
           <p>{{ question.content }}</p>
 
           {% if question.question_type != 'simple_number' %}
-            <p>=</p>
             <div id="answer-box" class="answer-box" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
           {% endif %}
         </div>

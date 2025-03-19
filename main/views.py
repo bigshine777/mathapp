@@ -103,7 +103,7 @@ class QuestionDetailView(LoginRequiredMixin, QuestionAccessMixin, DetailView):
         elif question.question_type == "single_addition":
             random_num1 = random.randint(0, 9)
             random_num2 = random.randint(0, 9 - random_num1)
-            question.content = f"{random_num1} + {random_num2}"
+            question.content = f"{random_num1} + {random_num2} ="
             question.answer = str(random_num1 + random_num2)
 
         question.save()
@@ -116,10 +116,10 @@ class QuestionDetailView(LoginRequiredMixin, QuestionAccessMixin, DetailView):
 
         if input_answer == question.answer:
             question.completed_users.add(request.user)
+            messages.success(request, "正解!")
             if not question.next_question:
                 question.stage.completed_users.add(request.user)
                 question.save()
-                messages.success(request, "正解!")
                 return redirect("stage_detail", pk=question.stage.id)
             question.save()
             return redirect("question_detail", pk=question.next_question.id)
