@@ -46,6 +46,7 @@ form{
     border: 2px dashed #aaa;
     border-radius: 5px;
     min-width: 4rem;
+    flex-shrink: 0;
     height: 4rem;
     margin: auto;
 }

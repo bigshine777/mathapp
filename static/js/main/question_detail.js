@@ -18,10 +18,10 @@ function drop(event) {
     var data = event.dataTransfer.getData('text')
     if (placeholder) placeholder.remove()
 
-    var span = document.createElement('span')
-    span.textContent = data
-    span.classList.add('dropped-number')
-    answerBox.appendChild(span)
+    var p = document.createElement('p')
+    p.textContent = data
+    p.classList.add('dropped-number')
+    answerBox.appendChild(p)
 
     inputField.value += data
 }

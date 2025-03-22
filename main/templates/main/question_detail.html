@@ -25,7 +25,7 @@
         <input type="hidden" id="answer-input" name="answer" required />
         {% if question.question_type != 'simple_number' %}
           <div class="card-container">
-            {% for num in "123456789" %}
+            {% for num in "0123456789" %}
               <div class="number-card" draggable="true" ondragstart="drag(event)" data-value="{{ num }}">{{ num }}</div>
             {% endfor %}
           </div>
