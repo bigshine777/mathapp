@@ -2,7 +2,6 @@
 
 const answerBox = document.getElementById('answer-box')
 const inputField = document.getElementById('answer-input')
-const placeholder = answerBox.querySelector('.placeholder')
 
 function allowDrop(event) {
     event.preventDefault()
@@ -16,7 +15,6 @@ function drop(event) {
     if (!answerBox) return;
     event.preventDefault()
     var data = event.dataTransfer.getData('text')
-    if (placeholder) placeholder.remove()
 
     var p = document.createElement('p')
     p.textContent = data
@@ -38,8 +36,8 @@ reloadBtn.addEventListener("click", () => {
 
 // スライドバーによる回答方法
 
-const handle = document.getElementById('sliderHandle')
-const sliderContainer = document.getElementById('sliderContainer')
+const handle = document.getElementById('slider-handle')
+const sliderContainer = document.getElementById('slider-container')
 
 if (handle) {
     const minValue = 0
